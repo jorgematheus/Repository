@@ -20,6 +20,5 @@ export default class Repository extends Component {
     render() {
         const { match } = this.props;
         return <h1>{decodeURIComponent(match.params.repository)}</h1>;
-        retu;
     }
 }

@@ -71,14 +71,16 @@ export default class Repository extends Component {
         this.setState({ issues: data });
     };
 
+    // falta colocar o filtro junto
+
     pagination = async page => {
         const isPrev = page === 'prev';
         const { actualPage } = this.state;
 
         if (isPrev) {
-            this.setState({ actualPage: actualPage - 1 });
+            await this.setState({ actualPage: actualPage - 1 });
         } else {
-            this.setState({ actualPage: actualPage + 1 });
+            await this.setState({ actualPage: actualPage + 1 });
         }
 
         const { match } = this.props;
@@ -87,18 +89,18 @@ export default class Repository extends Component {
 
         const { data } = await api.get(`repos/${repoName}/issues`, {
             params: {
-                page: actualPage,
+                page: this.state.actualPage,
                 per_page: 5
             }
         });
 
-        await this.setState({ issues: data });
+        this.setState({ issues: data });
 
         console.log(actualPage);
     };
 
     render() {
-        const { repository, issues, loading } = this.state;
+        const { repository, issues, loading, actualPage } = this.state;
 
         if (loading) {
             return <Loading>Carregando...</Loading>;
@@ -143,7 +145,10 @@ export default class Repository extends Component {
                     ))}
                 </Issues>
                 <Pagination>
-                    <button onClick={() => this.pagination('prev')}>
+                    <button
+                        disabled={actualPage === 1}
+                        onClick={() => this.pagination('prev')}
+                    >
                         Anterior
                     </button>
                     <button onClick={() => this.pagination('next')}>

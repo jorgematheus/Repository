@@ -83,4 +83,11 @@ export const Pagination = styled.div`
     justify-content: space-around;
     align-items: center;
     margin: 30px 0px;
+
+    button {
+        &[disabled] {
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+    }
 `;

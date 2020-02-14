@@ -7,7 +7,6 @@ import api from '../../services/api';
 import { Loading, Owner, Issues, IssuesFilter, Pagination } from './styles';
 import Container from '../../components/Container/index';
 
-// as funções sempre recebem como parâmentro as props
 export default class Repository extends Component {
     PropTypes = {
         match: PropTypes.shape({
@@ -62,18 +61,17 @@ export default class Repository extends Component {
 
         const { data } = await api.get(`repos/${repoName}/issues`, {
             params: {
-                state: e.target.value
+                state: e.target.value,
+                per_page: 5
             }
         });
-
-        console.log(data);
 
         this.setState({ issues: data });
     };
 
     // falta colocar o filtro junto
 
-    pagination = async page => {
+    handlePagination = async page => {
         const isPrev = page === 'prev';
         const { actualPage } = this.state;
 
@@ -139,7 +137,13 @@ export default class Repository extends Component {
                             <div>
                                 <strong>
                                     <a href={issue.html_url}>{issue.title}</a>
+                                    {issue.labels.map(label => (
+                                        <span key={String(label.id)}>
+                                            {label.name}
+                                        </span>
+                                    ))}
                                 </strong>
+                                <p>{issue.user.login}</p>
                             </div>
                         </li>
                     ))}
@@ -147,11 +151,11 @@ export default class Repository extends Component {
                 <Pagination>
                     <button
                         disabled={actualPage === 1}
-                        onClick={() => this.pagination('prev')}
+                        onClick={() => this.handlePagination('prev')}
                     >
                         Anterior
                     </button>
-                    <button onClick={() => this.pagination('next')}>
+                    <button onClick={() => this.handlePagination('next')}>
                         Próximo
                     </button>
                 </Pagination>

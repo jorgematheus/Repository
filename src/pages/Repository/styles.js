@@ -16,9 +16,15 @@ export const Owner = styled.div`
     align-items: center;
 
     a {
+        display: flex;
+        align-items: center;
         color: #7159c1;
         font-size: 16px;
         text-decoration: none;
+
+        svg {
+            margin-right: 5px;
+        }
     }
 
     img {
@@ -44,20 +50,54 @@ export const Owner = styled.div`
 
 export const Issues = styled.ul`
     list-style: none;
+    padding-top: 30px;
+    margin-top: 30px;
 
     li {
         padding: 10px 25px;
+        display: flex;
+        border: 1px solid #eee;
+        align-items: center;
+
+        & + li {
+            margin-top: 10px;
+        }
 
         img {
             width: 50px;
             border-radius: 50%;
             margin-bottom: 5px;
-            margin-top: 10px;
+            border: 2px solid #eee;
         }
 
-        a {
-            text-decoration: none;
-            color: #08f;
+        div {
+            flex: 1;
+            margin-left: 15px;
+
+            a {
+                text-decoration: none;
+                color: #333;
+
+                &:hover {
+                    color: #71c;
+                }
+            }
+
+            span {
+                background: #eee;
+                padding: 2px 7px;
+                border-radius: 5px;
+                margin-left: 20px;
+                color: #333;
+                font-size: 12px;
+                font-weight: 600;
+            }
+
+            p {
+                margin-top: 5px;
+                font-size: 14px;
+                color: #999;
+            }
         }
     }
 `;
@@ -74,7 +114,8 @@ export const IssuesFilter = styled.div`
     }
 
     select {
-        width: 400px;
+        flex: 1px;
+        width: 50%;
     }
 `;
 
@@ -85,6 +126,12 @@ export const Pagination = styled.div`
     margin: 30px 0px;
 
     button {
+        background: transparent;
+        border-radius: 5px;
+        border: 1px solid #666;
+        padding: 5px;
+        font-size: 12px;
+
         &[disabled] {
             cursor: not-allowed;
             opacity: 0.5;
